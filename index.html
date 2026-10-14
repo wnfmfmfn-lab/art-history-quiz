@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>미술사조 탐험 퀴즈 - 초등학교 5학년 미술</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <!-- 배경 데코레이션 요소 -->
+  <div class="bg-shape circle-shape"></div>
+  <div class="bg-shape square-shape"></div>
+  <div class="bg-shape star-shape">✦</div>
+
+  <div class="app-container">
+    <!-- 상단 헤더 -->
+    <header class="app-header">
+      <div class="badge">🎨 초등 5학년 미술</div>
+      <h1 class="main-title">알쏭달쏭 미술사조 퀴즈</h1>
+      <div class="header-controls">
+        <button id="sound-btn" class="ctrl-btn" aria-label="효과음 켜기/끄기" title="소리 켜기/끄기">
+          🔊 <span class="btn-text">소리 ON</span>
+        </button>
+        <button id="tv-mode-btn" class="ctrl-btn" aria-label="교실 TV 큰글자 모드" title="글자 크기 키우기">
+          📺 <span class="btn-text">TV 모드</span>
+        </button>
+      </div>
+    </header>
+
+    <!-- 1. 시작 화면 -->
+    <main id="screen-start" class="screen active">
+      <div class="card intro-card">
+        <div class="stamp-tag">Art History Quiz</div>
+        <div class="intro-icon">🖼️ ✨</div>
+        <h2 class="intro-heading">그림 속에 숨겨진<br><span class="highlight-magenta">미술사조</span>를 찾아라!</h2>
+        <p class="intro-desc">
+          르네상스부터 현대 미디어 아트까지!<br>
+          재미있는 4지선다 <strong>10문제</strong>를 풀며<br>
+          멋진 <strong>미술 박사</strong>에 도전해 보세요!
+        </p>
+
+        <div class="info-chips">
+          <div class="chip">📝 총 10문제</div>
+          <div class="chip">🎯 즉시 해설 확인</div>
+          <div class="chip">🏆 최종 점수 발표</div>
+        </div>
+
+        <button id="start-btn" class="btn btn-primary btn-large">
+          <span>🚀 퀴즈 시작하기!</span>
+        </button>
+      </div>
+    </main>
+
+    <!-- 2. 퀴즈 진행 화면 -->
+    <main id="screen-quiz" class="screen">
+      <!-- 진행 바 및 상태 정보 -->
+      <div class="quiz-status-bar">
+        <div class="status-left">
+          <span class="status-label">문제</span>
+          <span class="question-count"><strong id="current-q-num">1</strong> / <span id="total-q-num">10</span></span>
+        </div>
+        <div class="progress-track">
+          <div id="progress-fill" class="progress-fill" style="width: 10%;"></div>
+        </div>
+        <div class="status-right">
+          <span class="status-label">현재 점수</span>
+          <span id="current-live-score" class="live-score">0점</span>
+        </div>
+      </div>
+
+      <!-- 문제 카드 -->
+      <section class="card quiz-card">
+        <div class="question-header">
+          <span id="question-theme-tag" class="theme-tag">사조 힌트</span>
+          <h2 id="question-text" class="question-title">문제 텍스트가 들어가는 자리입니다.</h2>
+        </div>
+
+        <!-- 4지선다 보기 영역 -->
+        <div id="options-container" class="options-grid">
+          <!-- 보기 버튼 4개 동적 생성 -->
+        </div>
+
+        <!-- 즉각적인 정오답 피드백 및 해설 박스 -->
+        <div id="feedback-container" class="feedback-box hidden">
+          <div class="feedback-banner">
+            <span id="feedback-icon" class="feedback-icon">🎉</span>
+            <span id="feedback-title" class="feedback-title">정답입니다!</span>
+          </div>
+          <div class="explanation-content">
+            <div class="explanation-tag">💡 알기 쉬운 해설</div>
+            <p id="explanation-text" class="explanation-desc">해설 내용이 여기에 나옵니다.</p>
+          </div>
+          <button id="next-btn" class="btn btn-magenta btn-next">
+            <span>다음 문제로 넘어가기 👉</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- 3. 결과 화면 -->
+    <main id="screen-result" class="screen">
+      <div class="card result-card">
+        <canvas id="confetti-canvas"></canvas>
+        <div class="stamp-tag">Result Report</div>
+        
+        <div id="result-badge-emoji" class="result-badge-emoji">👑</div>
+        <h2 id="result-grade-title" class="result-grade-title">대단해요! 미술사 마스터</h2>
+        
+        <div class="score-display-box">
+          <div class="score-label">최종 획득 점수</div>
+          <div class="score-number-wrap">
+            <span id="final-score" class="final-score">100</span>
+            <span class="score-unit">점</span>
+          </div>
+          <div class="score-subtext">10문제 중 <strong id="correct-count">10</strong>문제 정답!</div>
+        </div>
+
+        <p id="result-message" class="result-message">
+          탁월한 미술 감각을 가지고 있네요! 현대 미술관의 큐레이터가 되어도 손색없겠어요.
+        </p>
+
+        <div class="result-actions">
+          <button id="restart-btn" class="btn btn-primary btn-large">
+            <span>🔄 다시 풀기</span>
+          </button>
+          <button id="toggle-review-btn" class="btn btn-outline">
+            <span>📋 문제 모아보기 (해설 복습)</span>
+          </button>
+        </div>
+
+        <!-- 전체 문제 복습 / 오답 노트 목록 (접기/펼치기) -->
+        <div id="review-section" class="review-section hidden">
+          <h3 class="review-title">📌 10문제 총정리 & 해설</h3>
+          <div id="review-list" class="review-list">
+            <!-- 동적 주입 -->
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- 하단 풋터 -->
+    <footer class="app-footer">
+      <span>초등학교 5학년 미술과 교육과정 | 미술사조 탐구 학습 퀴즈</span>
+    </footer>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
